@@ -1,0 +1,6 @@
+#!/bin/bash
+
+gcc rwa.c -o rwa
+./rwa >f
+gnuplot rwa.gnu
+
