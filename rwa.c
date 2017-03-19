@@ -38,6 +38,8 @@ void rw(double min_kHz, double max_kHz, int band) {
     /* Print in format gnuplot expects. */
     printf("# %.3f to %.3f kHz, multiple %d\n",
 	   min_kHz, max_kHz, n);
+
+
     
     printf("%.3f 0 %d\n%.3f 1 %d\n%.3f 1 %d\n%.3f 0 %d\n\n",
 	   lambda0_ft-(1e-3), band, lambda0_ft, band,
@@ -56,7 +58,7 @@ void rw(double min_kHz, double max_kHz, int band) {
  * Print ranges of half wavelengths for ecah ham band.
  * Edit any frequency ranges here!
  ***********************************************************************/
-void printHalfwaves(void) {
+void printHalfwaves(int bandmask) {
   //  rw(50000., 52000., 6);     /* 6m */
   //  rw(28000., 29700., 10);     /* 10m */
   //  rw(24890., 24990., 12);     /* 12m */
@@ -69,9 +71,31 @@ void printHalfwaves(void) {
   //rw(1850., 1950., 160);       /* 160m */
 }
 
-
-
-
-int main(int argc, char **argv) {
-  printHalfwaves();
+int main(int argc, char *argv[]) {
+  int i = 0;
+  for( i = 0; i<argc; i++) {
+    if(160 == atoi(argv[i]))
+      rw(1850, 1950, 160);
+    if(80 == atoi(argv[i]))
+      rw(3500, 3800, 80);
+    if(40 == atoi(argv[i]))
+      rw(7000, 7200, 40);
+    if(30 == atoi(argv[i]))
+      rw(10100, 10150, 30);
+    if(20 == atoi(argv[i]))
+      rw(14000, 14350, 20);
+    if(17 == atoi(argv[i]))
+      rw(18068, 18168, 17);
+    if(15 == atoi(argv[i]))
+      rw(21000, 21450, 15);
+    if(12 == atoi(argv[i]))
+      rw(24890, 24990, 12);
+    if(10 == atoi(argv[i]))
+      rw(28000, 29700, 10);
+    if(6 == atoi(argv[i]))
+      rw(50000, 52000, 6);
+  }
 }
+
+
+

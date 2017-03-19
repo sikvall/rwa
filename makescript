@@ -1,6 +1,6 @@
 #!/bin/bash
 
 gcc rwa.c -o rwa
-./rwa >f
+./rwa >data.plot
 gnuplot rwa.gnu
 
