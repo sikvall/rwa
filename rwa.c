@@ -116,19 +116,19 @@ int main (int argc, char **argv)
 	case 'r':
 	  region = atoi(optarg);
 	  if(region < 1 || region > 3) {
-	    puts("Error: Region must be 1-3, and we only have data for regions 1-2 at this moment.\n");
+	    puts("# Error: Region must be 1-3, and we only have data for regions 1-2 at this moment.\n");
 	    exit(10);
 	  }
 	  if(region == 2) {
-	    puts("Region 2 data missing at this time. Sorry. \n");
+	    puts("# Region 2 data missing at this time. Sorry. \n");
 	    exit(0);
 	  }
 	  if(region == 3) {
-	    puts("Region 3 data missing at this time. Sorry. \n");
+	    puts("# Region 3 data missing at this time. Sorry. \n");
 	    exit(0);
 	  }
 	  if(region == 1)
-	    puts("Region 1 selected, Europe, Africa, Russia and Middle East.\n");
+	    puts("# Region 1 selected, Europe, Africa, Russia and Middle East.\n");
 	  break;
         case 'b':
 	  for(optind--; optind < argc && *argv[optind] != '-'; optind++) {
@@ -136,56 +136,56 @@ int main (int argc, char **argv)
 	    switch(band) {
 	    case 160:
 	      if(verbose)
-		printf("Band %d considered.\n", band);
+		printf("# Band %d considered.\n", band);
 	      rw(1850, 1950, 160);
 		break;
 	    case 80:
 	      if(verbose)
-		printf("Band %d considered.\n", band);
+		printf("# Band %d considered.\n", band);
 	      rw(3500, 3800, 80);
 	      break;
 	    case 40:
 	      if(verbose)
-		printf("Band %d considered.\n", band);
+		printf("# Band %d considered.\n", band);
 	      rw(7000,7200, 40);
 	      break;
 	    case 30:
 	      if(verbose)
-		printf("Band %d considered.\n", band);
+		printf("# Band %d considered.\n", band);
 	      rw(10100, 10150, 30);
 	      break;
 	    case 20:
 	      if(verbose)
-		printf("Band %d considered.\n", band);
+		printf("# Band %d considered.\n", band);
 	      rw(14000, 14350, 20);
 	      break;
 	    case 17:
 	      if(verbose)
-		printf("Band %d considered.\n", band);
+		printf("# Band %d considered.\n", band);
 	      rw(18068, 18168, 17);
 	      break;
 	    case 15:
 	      if(verbose)
-		printf("Band %d considered.\n", band);
+		printf("# Band %d considered.\n", band);
 	      rw(21000, 21450, 15);
 	      break;
 	    case 12:
 	      if(verbose)
-		printf("Band %d considered.\n", band);
+		printf("# Band %d considered.\n", band);
 	      rw(24890, 24990, 12);
 	      break;
 	    case 10:
 	      if(verbose)
-		printf("Band %d considered.\n", band);
+		printf("# Band %d considered.\n", band);
 	      rw(28000, 29700, 10);
 	      break;
 	    case 6:
 	      if(verbose)
-		printf("Band %d considered.\n", band);
+		printf("# Band %d considered.\n", band);
 	      rw(50000, 52000, 6);
 	      break;
 	    default:
-	      printf("Band %d not found.\n", band);
+	      printf("# Band %d not found.\n", band);
 	      break;
 	    }
 	  }
