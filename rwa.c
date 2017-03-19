@@ -1,38 +1,40 @@
-/*
- * Simple calculations of half wavelengths of ham bands.
- *
+/***********************************************************************
+ * Adapted from orignal code by
  * Mike Markowski AB3AP
  * Thu Jun 28 07:01:26 EDT 2012
- */
-
+ *
+ * Refined and added to by SM0UEI
+ * 2017 and onwards
+ *
+ * Code is in public domain
+ *
+ ***********************************************************************/
 #include <stdio.h>
 #include <stdlib.h>
 
 
-/*
- * For a given frequency range, calculate the half wavelength range and print
- * it.  In addition, print up to 4th multiples of each range up to the length
- * of 160m half wavelength.
- *
- * Comments are also printed out, assuming that the output will saved to a file,
- * and that file used by gnuplot for plotting.
- */
-void rw(double min_kHz, double max_kHz, int band, int color) {
+/***********************************************************************
+ * For a given range in kHz (start-stop) print the half-wave resonant
+ * frequency and all multiples up to 160 meter band.
+ ***********************************************************************/
+void rw(double min_kHz, double max_kHz, int band) {
   double lambda0_ft, lambda1_ft;
   double loFreq_MHz = 1.8;
   double lambdaMax_ft = 2 * 150 / loFreq_MHz; /* Max wavelength in band. */
   int n;
   double qtr_ft = 150 / loFreq_MHz / 2;
-  int multiples = 2*(1+160/band);
+  int multiples = 2*(160/band);
 
+  /* For debug only */
   fprintf(stderr, "# Examining %d multiples of the %d band.\n",
 	 multiples, band);
   
-  n = 1; /* First multiple. */
+  /* First multiple. */
+  n = 1; 
   do {
     lambda0_ft = n * 150 / (max_kHz * 1e-3);
     lambda1_ft = n * 150 / (min_kHz * 1e-3);
-
+    
     /* Print in format gnuplot expects. */
     printf("# %.3f to %.3f kHz, multiple %d\n",
 	   min_kHz, max_kHz, n);
@@ -40,7 +42,7 @@ void rw(double min_kHz, double max_kHz, int band, int color) {
     printf("%.3f 0 %d\n%.3f 1 %d\n%.3f 1 %d\n%.3f 0 %d\n\n",
 	   lambda0_ft-(1e-3), band, lambda0_ft, band,
 	   lambda1_ft, band, lambda1_ft+(1e-3), band );
-
+    
     /* Prepare for next multiple. */
     n++;
 
@@ -50,20 +52,21 @@ void rw(double min_kHz, double max_kHz, int band, int color) {
 
 
 
-/*
+/***********************************************************************
  * Print ranges of half wavelengths for ecah ham band.
- */
+ * Edit any frequency ranges here!
+ ***********************************************************************/
 void printHalfwaves(void) {
-  //    rw(50000., 52000., 6,128);     /* 6m */
-  rw(28000., 29700., 10,256);     /* 10m */
-  rw(24890., 24990., 12,384);     /* 12m */
-  rw(21000., 21450., 15,512);     /* 15m */
-  rw(18068., 18168., 17,640);     /* 17m */
-  rw(14000., 14350., 20,1152);     /* 20m */
-  //    rw(10100., 10150., 30,1280);     /* 30m */
-  rw(7000., 7200., 40,65536);       /* 40m */
-  rw(3500., 3800., 80,1664);       /* 80m */
-  rw(1850., 1950., 160,1792);       /* 160m */
+  //  rw(50000., 52000., 6);     /* 6m */
+  //  rw(28000., 29700., 10);     /* 10m */
+  //  rw(24890., 24990., 12);     /* 12m */
+  //rw(21000., 21450., 15);     /* 15m */
+  //  rw(18068., 18168., 17);     /* 17m */
+  //rw(14000., 14350., 20);     /* 20m */
+  //  rw(10100., 10150., 30);     /* 30m */
+  rw(7000., 7200., 40);       /* 40m */
+  //rw(3500., 3800., 80);       /* 80m */
+  //rw(1850., 1950., 160);       /* 160m */
 }
 
 
