@@ -1,6 +1,20 @@
 #!/bin/bash
+#
+# Anders SM0UEI Sikvall
+# 2017-03-20
+# Version 1.0
+#
 
+# Compile the c tool first
+# if you want you can run it manually (-h gives you help)
 gcc rwa.c -o rwa
+
+# Call the tool with the bands listed, output to plot.dat
+# You can adjust the bands here.
 ./rwa -b 10 12 15 17 20 40 80 > plot.dat
+
+# Run gnuplot on the data produced to get a png file with the
+# plot nicely.
 gnuplot rwa.gnu
 
+# That's it
