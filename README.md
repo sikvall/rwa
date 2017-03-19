@@ -15,14 +15,15 @@ HOW TO GET STARTED
    gcc -o rwa rwa.c
 
 2. Run the rwa command with arguments for the bands you wish to plot,
-   example "./rwa 20 40 80 >data.plot" will run the plots for the
+   example "./rwa -b 20 40 80 >data.plot" will run the plots for the
    20,40 and 80 meter bands. Allowed bands are all ham bands between 6
    - 160 meters (6, 10, 12, 15, 17, 20, 30, 40, 80, 160)
+   Right now only region 1 frequency plan is supported
    
 3. Then run gnuplot on the file rwa.gnu
    gnuplot rwa.gnu
 
-This should produce a f.png in the folder that shows the plot.
+This should produce a plot.png in the folder that shows the plot.
 
 Colours are automatically selected according to the bands and their
 distribution
