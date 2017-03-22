@@ -16,6 +16,8 @@
 
 
 #define METER_TO_FT 3.2808399
+#define FT_TO_METER 1/METER_TO_FT
+
 
 // Globals used sparingly :)
 int feet_flg = 0;
@@ -63,7 +65,7 @@ void print_help(void)
  * frequency and all multiples up to 160 meter band.
  ***********************************************************************/
 void rw(double min_kHz, double max_kHz, int band) {
-  double lambda0_ft, lambda1_ft;
+  double lambda0, lambda1;
   int i;
   int multiples = 2*(160/band);
 
@@ -72,13 +74,13 @@ void rw(double min_kHz, double max_kHz, int band) {
   
   // First multiple.
   for(i = 1; i <= multiples; i++) {
-    lambda0_ft = i * 150 * vf / (max_kHz * 1e-3);
-    lambda1_ft = i * 150 * vf / (min_kHz * 1e-3);
+    lambda0 = i * 150 * vf / (max_kHz * 1e-3);
+    lambda1 = i * 150 * vf / (min_kHz * 1e-3);
 
     // If in feet do simple conversion here
     if(feet_flg) {
-      lambda0_ft = METER_TO_FT * lambda0_ft;
-      lambda1_ft = METER_TO_FT * lambda1_ft;
+      lambda0 = METER_TO_FT * lambda0;
+      lambda1 = METER_TO_FT * lambda1;
     }
     
     // Print in format gnuplot expects.
@@ -86,8 +88,8 @@ void rw(double min_kHz, double max_kHz, int band) {
 	   min_kHz, max_kHz, i);
     
     printf("%.3f 0 %d\n%.3f 1 %d\n%.3f 1 %d\n%.3f 0 %d\n\n",
-	   lambda0_ft-(1e-3), band, lambda0_ft, band,
-	   lambda1_ft, band, lambda1_ft+(1e-3), band );
+	   lambda0-(1e-3), band, lambda0, band,
+	   lambda1, band, lambda1+(1e-3), band );
   } 
 }
 
