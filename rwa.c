@@ -1,11 +1,11 @@
 /***********************************************************************
+ * Written by SM0UEI
+ * 2017 and onwards, various options added, code cleanup and conversion
+ * to the metric system instead
+ *
  * Adapted from orignal code by
  * Mike Markowski AB3AP
  * Thu Jun 28 07:01:26 EDT 2012
- *
- * Refined and added to by SM0UEI
- * 2017 and onwards, various options added, code cleanup and conversion
- * to the metric system instead
  *
  * Code is in public domain
  *
@@ -13,6 +13,7 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <getopt.h>
+#include <stdio.h>
 
 
 #define METER_TO_FT 3.2808399
@@ -22,6 +23,11 @@
 // Globals used sparingly :)
 int feet_flg = 0;
 float vf = 98.0;
+FILE *out = NULL;
+
+// Template definitions
+void print_help(void);
+void rw(double min_kHz, double max_kHz, int band);
 
 
 void print_help(void)
@@ -64,7 +70,8 @@ void print_help(void)
  * For a given range in kHz (start-stop) print the half-wave resonant
  * frequency and all multiples up to 160 meter band.
  ***********************************************************************/
-void rw(double min_kHz, double max_kHz, int band) {
+void rw(double min_kHz, double max_kHz, int band)
+{
   double lambda0, lambda1;
   int i;
   int multiples = 2*(160/band);
@@ -95,17 +102,17 @@ void rw(double min_kHz, double max_kHz, int band) {
 
 
 
-
+/*
+ * Standard main
+ *
+ * Process arguments, do things in the right order then call on the
+ * plotter to plot the frequency blocks for the desired bands
+ *
+ */
 int main (int argc, char **argv)
 {
-  int c;
-  int region = 1; // Default EU region
-
-  // If no arguments, then print help and exit
-  if(argc < 2) {
-    printf("# Missing arguments, use -h for help.\n");
-    exit(5);
-  }
+  int    opt = 0;    // Option counter
+  int region = 1;    // Default EU region
 
   while (1)
     {
@@ -113,6 +120,7 @@ int main (int argc, char **argv)
         {
 	  {"help",     no_argument,       0, 'h'},
 	  {"feet",     no_argument,       0, 'f'},
+	  //	  {"output",   required_argument, 0, "o"},
 	  {"meter",    no_argument,       0, 'm'},
 	  {"velocity", required_argument, 0, 'v'},
 	  {"region",   required_argument, 0, 'r'},
@@ -122,18 +130,18 @@ int main (int argc, char **argv)
       
       /* getopt_long stores the option index here. */
       int option_index = 0;
-      c = getopt_long (argc, argv, "hfmv:r:b:",
+      opt = getopt_long (argc, argv, "hfo:mv:r:b:",
                        long_options, &option_index);
 
       /* Detect the end of the options. */
-      if (c == -1)
+      if (opt == -1)
         break;
-      switch (c)
+      switch (opt)
         {
 	case 'f':
 	  feet_flg = 1;
 	  break;
-
+	  
 	case 'm':
 	  feet_flg = 0;
 	  break;
@@ -142,7 +150,7 @@ int main (int argc, char **argv)
 	  print_help();
 	  exit(0);
 	  break;
-
+	  
 	case 'v':
 	  // Get velocity factor
 	  vf = atof(optarg);
